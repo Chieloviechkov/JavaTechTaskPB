@@ -1,10 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Ланцюжок міст</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            function getRandomColor() {
+                var letters = '0123456789ABCDEF';
+                var color = '#';
+                for (var i = 0; i < 6; i++) {
+                    color += letters[Math.floor(Math.random() * 16)];
+                }
+                return color;
+            }
+
+            $("h1").click(function(){
+                var words = $(".chain").text().split(/\s+/);
+                $(".chain").empty();
+                $.each(words, function(i, word){
+                    var color = getRandomColor();
+                    $(".chain").append($("<span>").text(word + " ").css("color", color));
+                });
+            });
+        });
+    </script>
 </head>
 <body>
-$END$
+<h1 style="cursor: default">Ланцюжок міст <span style="font-weight: 100">(Click me!)</span></h1>
+<div>
+    <p class="chain" th:if="${chain}" th:text="${chain}"></p>
+    <p th:if="${error}" th:text="${error}"></p>
+</div>
 </body>
 </html>
